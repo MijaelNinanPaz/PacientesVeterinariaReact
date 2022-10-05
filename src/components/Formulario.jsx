@@ -1,8 +1,8 @@
-import { useState, useEfect } from 'react';
+import { useState, useEffect } from 'react';
 import Error from './Error'
 
 
-const Formulario = ({ pacientes, setPacientes }) => {
+const Formulario = ({ pacientes, setPacientes, paciente }) => {
   const [nombre, setNombre] = useState('');
   const [propietario, setPropietario] = useState('');
   const [email, setEmail] = useState('');
@@ -10,6 +10,23 @@ const Formulario = ({ pacientes, setPacientes }) => {
   const [sintomas, setSintomas] = useState('');
 
   const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if( Object.keys(paciente).length > 0 ) {
+      setNombre(paciente.nombre)
+      setPropietario(paciente.propietario)
+      setEmail(paciente.email)
+      setFecha(paciente.fecha)
+      setSintomas(paciente.sintomas)
+    }  
+  }, [paciente])
+
+
+  const generarId = () => {
+    const random = Math.random().toString(36)
+    const fecha = Date.now().toString(36)
+    return random + fecha
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +45,8 @@ const Formulario = ({ pacientes, setPacientes }) => {
       propietario,
       email,
       fecha,
-      sintomas
+      sintomas,
+      id: generarId()
     }
 
     setPacientes([...pacientes, objetoPaciente])
@@ -64,6 +82,7 @@ const Formulario = ({ pacientes, setPacientes }) => {
               className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
               value={ nombre }
               onChange={ (e) => setNombre(e.target.value) }
+
             />
           </div>
           <div className="mb-5">
