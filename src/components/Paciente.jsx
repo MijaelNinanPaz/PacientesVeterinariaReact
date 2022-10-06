@@ -1,6 +1,6 @@
 const Paciente = ({ paciente, setPaciente }) => {
 
-    const { nombre, propietario, email, fecha, sintomas} = paciente
+    const { nombre, propietario, email, fecha, sintomas } = paciente
 
   return (
     <div className="mx-5 my-3 bg-white shadow-md px-5 py-10 rounded-xl">
